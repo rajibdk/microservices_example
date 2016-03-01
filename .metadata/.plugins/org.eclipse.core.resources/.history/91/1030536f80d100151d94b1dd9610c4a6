@@ -1,0 +1,27 @@
+package sample.service.rest;
+
+public class OrderRest {
+	private long id = 1;
+
+	@Inject
+	private RestTemplate restTemplate;
+
+	@GET
+	@Path(“order”)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Order submitOrder(@QueryParam(“idCustomer”) long idCustomer,	@QueryParam(“idProduct”) long idProduct, @QueryParam(“amount”) long amount) {
+	Order order = new Order();
+	Customer customer = restTemplate.getForObject(“http://localhost:8081/customer?id={id}”, Customer.class, idCustomer);
+
+	Product product = restTemplate.getForObject(“http://localhost:8082/product?id={id}”, Product.class, idProduct);
+	order.setCustomer(customer);
+	order.setProduct(product);
+	order.setId(id);
+	order.setAmount(amount);
+	order.setDataOrder(new Date());
+	id++;
+	return order;
+
+	}
+
+}

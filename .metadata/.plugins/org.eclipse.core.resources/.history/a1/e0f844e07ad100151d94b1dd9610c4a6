@@ -1,0 +1,14 @@
+package sample.service;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ApplicationConfig {
+
+	static class JerseyConfig extends ResourceConfig {
+		public JerseyConfig() {
+			this.packages("sample.service.rest");
+		}
+	}
+}
